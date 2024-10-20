@@ -1,0 +1,59 @@
+.activitySection {
+    padding: 20px;
+    background-color: #fff; /* Cor de fundo clara */
+    border: 1px solid #000;
+    margin-bottom: 30px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
+.predefinedActivities ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.predefinedActivities li {
+    margin: 5px 0;
+}
+
+.predefinedActivities a {
+    text-decoration: none;
+    color: #f21b3f;
+}
+
+.customActivity, .accessActivity {
+    padding: 15px;
+    border: 1px solid #f21b3f;
+    border-radius: 8px;
+    background-color: #fff; /* Fundo branco para destacar */
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+ }
+
+button[type="submit"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    opacity: 0.8;
+}
