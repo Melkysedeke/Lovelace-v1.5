@@ -234,9 +234,9 @@ export default function Home() {
           <video src=""></video>
         </div>
       </section>
-      <div>
+      <div className={styles.paraProf}>
         <h1>
-          <strong>Para professores</strong>
+          <strong >Para professores</strong>
         </h1>
       </div>
       <section className={styles.secVideo}>

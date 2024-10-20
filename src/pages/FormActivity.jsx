@@ -17,7 +17,7 @@ function generateAccessCode(length = 8) {
 }
 
 
-function FormActivity({ activity = null, handleSubmit }) {
+function FormActivity({ activity = null }) {
     const [user, setUser] = useState(() => {
         const storedUser = sessionStorage.getItem('user');
         return storedUser ? JSON.parse(storedUser) : null;
@@ -109,7 +109,7 @@ function FormActivity({ activity = null, handleSubmit }) {
         <div className={styles.container}>
             <form className={styles.form} onSubmit={submit}>
                 <header className={styles.header}>
-                    <h1><a href="/">Lovelace</a></h1>
+                    <h1><a href="/ua">Lovelace</a></h1>
                     <p>{activity ? "Editar Atividade" : "Criar Atividade"}</p>
                     <button type='submit'>{activity ? "Salvar" : "Criar"}</button>
                 </header>

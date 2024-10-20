@@ -121,9 +121,8 @@
       "id": "f6d4"
     },
     {
-      "id": "b024",
       "name": "Atividade 012 - Palavras cognatas",
-      "description": "Atividade realizada em sala de aula, tema \"Palavras cognatas\", Turma xx.\n\nPara todos os textos apresentados, indique as palavras cognatas.",
+      "description": "Atividade realizada em sala de aula, tema \"Palavras cognatas\", Turma xx.\nPara todos os textos apresentados, indique as palavras cognatas.",
       "accessCode": "R20QXlKy",
       "questions": [
         {
@@ -152,7 +151,9 @@
           "text": "The global economy has become increasingly interconnected in recent decades. Many industries now rely on international trade and cooperation to produce goods and services. Large companies often have offices and factories in multiple countries, allowing them to operate more efficiently. At the same time, digital platforms and online services have created new opportunities for businesses to expand their reach. Innovation and entrepreneurship are key to driving economic growth, as new ideas and technologies can lead to the creation of entirely new markets. However, with these opportunities also come challenges, such as dealing with economic crises or maintaining fair trade practices."
         }
       ],
-      "userId": "0340"
+      "date": "2024-10-20T18:30:22.643Z",
+      "userId": "0340",
+      "id": "b024"
     },
     {
       "id": "d27e",
@@ -438,6 +439,90 @@
       ],
       "user": "Usuário 2",
       "date": "2024-10-03T22:44:37.260Z"
+    },
+    {
+      "id": "559e",
+      "activityId": "b024",
+      "answers": [
+        {
+          "id": 1727992922793,
+          "text": "afdafadf"
+        },
+        {
+          "id": 1727992986857,
+          "text": "dafdafdafdafda"
+        },
+        {
+          "id": 1727992996938,
+          "text": "fdafdafdafdafdafdafdafda"
+        },
+        {
+          "id": 1727993004992,
+          "text": "afdafdafdasfdasfdafdafdsaf"
+        },
+        {
+          "id": 1727993019600,
+          "text": "fdasfdafdasfdasfdafdafdafdafdafdafda"
+        }
+      ],
+      "user": "Melky",
+      "date": "2024-10-20T19:51:25.018Z"
+    },
+    {
+      "id": "5bfd",
+      "activityId": "b024",
+      "answers": [
+        {
+          "id": 1727992922793,
+          "text": "asdfasdfadfasd"
+        },
+        {
+          "id": 1727992986857,
+          "text": "fdafdafdasfdaf"
+        },
+        {
+          "id": 1727992996938,
+          "text": "fdafda"
+        },
+        {
+          "id": 1727993004992,
+          "text": ""
+        },
+        {
+          "id": 1727993019600,
+          "text": ""
+        }
+      ],
+      "user": "Super Ada",
+      "date": "2024-10-20T20:05:48.594Z"
+    },
+    {
+      "id": "83c9",
+      "activityId": "b024",
+      "answers": [
+        {
+          "id": 1727992922793,
+          "text": "lakfldalkf~kalkfkaçkf"
+        },
+        {
+          "id": 1727992986857,
+          "text": "kafldkfafkdaklfkdlaççfçakçfka"
+        },
+        {
+          "id": 1727992996938,
+          "text": ",afkasdlçkfsdlakfklsdçakfllsaklfdakçflasfkaskfksçakf,aç"
+        },
+        {
+          "id": 1727993004992,
+          "text": ""
+        },
+        {
+          "id": 1727993019600,
+          "text": ""
+        }
+      ],
+      "user": "Melky",
+      "date": "2024-10-20T20:14:35.562Z"
     }
   ]
 }

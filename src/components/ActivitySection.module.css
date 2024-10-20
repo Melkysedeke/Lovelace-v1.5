@@ -1,7 +1,7 @@
 .activitySection {
     padding: 20px;
     background-color: #fff; /* Cor de fundo clara */
-    border: 1px solid #000;
+    border: 1px solid #8e8e8e;
     margin-bottom: 30px;
 }
 
@@ -35,25 +35,29 @@ h2 {
 
 .customActivity, .accessActivity {
     padding: 15px;
-    border: 1px solid #f21b3f;
+    border: 1px solid lightgray;
     border-radius: 8px;
     background-color: #fff; /* Fundo branco para destacar */
 }
 
-input {
+.activitySection input {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
  }
 
-button[type="submit"] {
+.activitySection button {
     padding: 10px 20px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
 }
 
-button[type="submit"]:hover {
+.activitySection button a {
+    color: #fff;
+}
+
+.activitySection button:hover {
     opacity: 0.8;
 }

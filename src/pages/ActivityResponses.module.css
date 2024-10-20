@@ -1,0 +1,105 @@
+.container {
+    max-width: 960px;
+    margin: auto;
+    background-color: #ffffff; /* Fundo branco */
+    border-radius: 8px;
+    color: #333; /* Texto em cor escura */
+}
+
+/* Header */
+
+.header {
+    width: 100%;
+    height: 72px;
+    border: 1px solid #8e8e8e;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    margin: 24px 0 30px 0;
+    border-radius: 8px;
+}
+
+.header h1 {
+    font: bold normal 36px "Inspiration";
+    transform: rotate(-13deg);
+    background:  linear-gradient(269.52deg, #F21B3F -1.77%, #FFD151 95%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+}
+
+.userInfo div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.userInfo img {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+}
+
+/* Card */
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #F21B3F; /* Título em vermelho */
+}
+
+p {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.responsesSection {
+    margin-top: 20px;
+}
+
+.responseCard {
+    background-color: #fff; /* Fundo branco */
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid #F21B3F; /* Borda lateral vermelha */
+}
+
+.responseCard h3 {
+    font-size: 1.2rem;
+    color: #F21B3F; /* Texto do título da resposta em vermelho */
+}
+
+.date {
+    font-size: 0.9rem;
+    color: #999;
+    margin-bottom: 10px;
+}
+
+.questionBlock {
+    margin-bottom: 15px;
+}
+
+.question {
+    font-size: 1.1rem;
+    color: #333; /* Perguntas em cor escura */
+}
+
+.answer {
+    font-size: 1rem;
+    color: #555;
+    background-color: #f9f9f9; /* Fundo claro para as respostas */
+    padding: 8px;
+    border-radius: 5px;
+    margin-top: 5px;
+    border: 1px solid #F21B3F; /* Borda vermelha ao redor das respostas */
+}

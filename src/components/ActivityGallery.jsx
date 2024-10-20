@@ -44,7 +44,6 @@ function ActivityGallery() {
 
     return (
         <section className={styles.gallery}>
-            <button><a href="/ce">Criar Atividade</a></button>
             <div className={styles.galleryContainer}>
                 {activities.length > 0 ? (
                     activities.map(activity => (

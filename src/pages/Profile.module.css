@@ -151,7 +151,7 @@
 }
 
 .profileDetails button:hover {
-  background-color: #d01933; /* Cor do botão ao passar o mouse */
+  background-color: #8C1024;
 }
 
 .profileDetails button:nth-of-type(3) {
@@ -213,5 +213,5 @@
 }
 
 .closeModalButton:hover {
-  background-color: #d01933; /* Cor ao passar o mouse */
+  background-color: #8C1024;
 }
