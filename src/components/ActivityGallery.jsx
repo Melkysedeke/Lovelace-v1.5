@@ -7,12 +7,10 @@ function ActivityGallery() {
     const [, setUser] = useState(null); 
 
     useEffect(() => {
-        // Pegando os dados do usuário armazenados no sessionStorage
         const storedUser = JSON.parse(sessionStorage.getItem('user'));
         if (storedUser) {
             setUser(storedUser); 
         }
-        // Pegando o ID do usuário logado
         const userId = storedUser ? storedUser.id : null;
         if (userId) {
             fetch(`http://localhost:4000/activities?userId=${userId}`)

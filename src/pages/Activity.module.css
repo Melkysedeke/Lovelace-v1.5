@@ -70,21 +70,21 @@
 
 .code_box {
     display: flex;
-    justify-content: center;  /* Centraliza horizontalmente */
-    align-items: center;      /* Centraliza verticalmente */
-    position: relative;       /* Para o botão ficar absoluto */
+    justify-content: center;
+    align-items: center;
+    position: relative;
     padding: 10px;
-    border: 1px solid #ccc;   /* Apenas para visualização */
+    border: 1px solid #ccc;
 }
 
 .code_text {
-    text-align: center;       /* Centraliza o texto dentro do h3 */
+    text-align: center;
 }
 
 .copyButton {
     position: absolute;
-    right: 10px;              /* Posiciona o botão no canto direito */
-    top: 50%;                 /* Centraliza verticalmente */
+    right: 10px;
+    top: 50%;
     transform: translateY(-50%);
     background-color: transparent;
     border: none;
@@ -134,7 +134,7 @@
     padding: 5px;
     border-radius: 4px;
     font-size: 12px;
-    top: -35px;  /* Posição acima do botão */
+    top: -35px;
     right: 0;
     white-space: nowrap;
     opacity: 0;
@@ -147,7 +147,7 @@
 }
 
 .code_box {
-    position: relative;  /* Para que o tooltip seja posicionado em relação a este container */
+    position: relative;
     display: flex;
     align-items: center;
 }

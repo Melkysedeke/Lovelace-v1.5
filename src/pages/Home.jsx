@@ -27,23 +27,20 @@ export default function Home() {
     console.log(storedUser);
     
     if (storedUser ) {
-        navigate("/ua"); // Navega para /ua se um usuário estiver armazenado
+        navigate("/ua");
     }
 }, [navigate]);
 
-  // Função para alternar visibilidade da senha
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  // Função para limpar campos
   function clearFields() {
     setEmail("");
     setPassword("");
     setName("");
   }
 
-  // Alternar entre login e cadastro
   const handleRegisterClick = () => {
     setIsActive(true);
   };
@@ -52,7 +49,6 @@ export default function Home() {
     setIsActive(false);
   };
 
-  // Configurações do Toast para mensagens de sucesso e erro
   const Toast = Swal.mixin({
     toast: true,
     position: "top-end",
@@ -75,14 +71,6 @@ export default function Home() {
     });
   };
 
-  // const showToastError = (message) => {
-  //   Toast.fire({
-  //     icon: "error",
-  //     title: message,
-  //   });
-  // };
-
-  // Função para recuperação de senha
   function handleForgotPassword() {
     Swal.fire({
       title: "Esqueceu sua senha?",
@@ -107,14 +95,12 @@ export default function Home() {
     });
   }
 
-  // Função para cadastro
   function handleSignUp(e) {
     e.preventDefault();
     showToastSuccess("Cadastro realizado com sucesso!");
     clearFields();
     setIsActive(false);
 
-  // Verificar se o email já está cadastrado
   fetch('http://localhost:4000/users')
       .then(resp => resp.json())
       .then(data => {
@@ -123,12 +109,11 @@ export default function Home() {
           if (userExists) {
               setError("Este email já está sendo utilizado. Por favor, escolha outro.");
           } else {
-              // Se o email não está cadastrado, realizar o cadastro
               const newUser = {
                   name: name, 
                   email: email, 
                   password: password, 
-                  profileImage: "/defaultProfile.png" // Adicionando a imagem padrão
+                  profileImage: "/defaultProfile.png"
               };
               fetch('http://localhost:4000/users', {
                   method: 'POST',
@@ -139,12 +124,10 @@ export default function Home() {
               })
               .then(resp => resp.json())
               .then(data => {
-                  // Salvando o usuário recém cadastrado no sessionStorage
                   console.log(data);
                   console.log(newUser);
                   sessionStorage.setItem('user', JSON.stringify(data));
                   sessionStorage.
-                  // Exibir mensagem de sucesso
                   console.log(data);
                   setTimeout(() => {
                     navigate("/ua");
@@ -156,7 +139,6 @@ export default function Home() {
       .catch(err => console.error("Erro ao verificar o email:", err));
   }
 
-  // Função para login
   function handleSignIn(e) {
     e.preventDefault();
     showToastSuccess("Login realizado com sucesso!");
@@ -166,7 +148,7 @@ export default function Home() {
       const user = data.find(user => user.email === email);
       if (user) {
           if (user.password === password) {
-              if (user.id) { // Verifica se o user.id está presente
+              if (user.id) {
                   sessionStorage.setItem('user', JSON.stringify(user));
                   navigate("/ua");       
               } else {
@@ -321,7 +303,7 @@ export default function Home() {
             />
             <div className={styles.showpassword}>
               <input
-                type={showPassword ? "text" : "password"} // Muda o tipo do input com base no estado
+                type={showPassword ? "text" : "password"}
                 placeholder="Senha"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -371,7 +353,7 @@ export default function Home() {
             />
             <div className={styles.showpassword}>
               <input
-                type={showPassword ? "text" : "password"} // Muda o tipo do input com base no estado
+                type={showPassword ? "text" : "password"}
                 placeholder="Senha"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}

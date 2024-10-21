@@ -42,7 +42,6 @@ const UserProfile = () => {
       return;
     }
 
-    // Verificar se o email já está em uso
     fetch('http://localhost:4000/users')
       .then(resp => resp.json())
       .then(data => {
@@ -51,7 +50,6 @@ const UserProfile = () => {
         if (userExists) {
           setErrorMessage("Este email já está sendo utilizado. Por favor, escolha outro.");
         } else {
-          // Atualizar o usuário no servidor
           fetch(`http://localhost:4000/users/${user.id}`, {
             method: 'PUT',
             headers: {
@@ -59,8 +57,8 @@ const UserProfile = () => {
             },
             body: JSON.stringify({
               ...user,
-              password: newPassword || user.password, // Use a nova senha se fornecida
-              profileImage: user.profileImage || "/defaultProfile.png" // Mantém a imagem padrão se não houver
+              password: newPassword || user.password,
+              profileImage: user.profileImage || "/defaultProfile.png"
             }),
           })
           .then(resp => {
@@ -70,7 +68,6 @@ const UserProfile = () => {
             return resp.json();
           })
           .then(updatedUser  => {
-            // Atualiza o usuário no sessionStorage
             sessionStorage.setItem('user', JSON.stringify(updatedUser ));
             setUser (updatedUser );
             setSuccessMessage('Dados atualizados com sucesso!');
@@ -121,7 +118,6 @@ const UserProfile = () => {
         if (!resp.ok) {
           throw new Error('Erro ao excluir a conta');
         }
-        // Remover o usuário do sessionStorage e redirecionar
         sessionStorage.removeItem('user');
         navigate("/");
       })

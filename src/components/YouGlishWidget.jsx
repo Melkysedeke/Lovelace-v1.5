@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useCallback } from 'react';
-import styles from './YouGlishWidget.module.css'; // Importando o arquivo de estilo como CSS Module
-
+import styles from './YouGlishWidget.module.css';
 const YouGlishWidget = () => {
     const [query, setQuery] = useState('');
     const [lang, setLang] = useState('english');
@@ -47,14 +46,14 @@ const YouGlishWidget = () => {
 
     const onVideoChange = (event) => {
         setCurTrack(event.trackNumber);
-        setViews(0); // Resetar views ao mudar de vídeo
+        setViews(0);
     };
 
     const handleCaptionConsumed = useCallback(() => {
         setViews((prevViews) => {
             const newViews = prevViews + 1;
 
-            if (widget) { // Verificar se o widget está disponível
+            if (widget) {
                 if (newViews < 3) {
                     widget.replay();
                 } else if (curTrack < totalTracks) {
@@ -62,7 +61,7 @@ const YouGlishWidget = () => {
                 }
             }
 
-            return newViews; // Retorna o novo valor de views
+            return newViews;
         });
     }, [curTrack, totalTracks, widget]);
 
@@ -124,7 +123,6 @@ const YouGlishWidget = () => {
                     <option value="english">English</option>
                     <option value="spanish">Spanish</option>
                     <option value="french">French</option>
-                    {/* Adicione outros idiomas conforme necessário */}
                 </select>
                 <input
                     type="text"

@@ -8,7 +8,7 @@ import Materials from "../components/Materials";
 export default function UserArea() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [menuVisible, setMenuVisible] = useState(false); // Estado para controlar o menu
+  const [menuVisible, setMenuVisible] = useState(false);
 
   useEffect(() => {
     try {
@@ -34,7 +34,6 @@ export default function UserArea() {
     navigate("/");
   };
 
-  // Função para alternar visibilidade da senha
   return (
     <div className={styles.container}>
       <header className={styles.header}>

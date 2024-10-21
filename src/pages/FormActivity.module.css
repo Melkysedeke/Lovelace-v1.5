@@ -18,7 +18,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-  margin: 24px 0 30px 0;
+  margin: 24px 0 0px 0;
   border-radius: 8px;
 }
 
@@ -73,10 +73,6 @@
 }
 
 .config button {
-  /* width: 103px;
-  height: 48px; */
-  /* background-color: #F21B3F;
-  color: #fff; */
   padding: 8px;
 }
 
@@ -110,7 +106,7 @@
 .headerForm {
   width: 100%;
   padding: 10px;
-  margin: 0 auto;
+  margin: 30px auto 0;
   border: 1px solid #8E8E8E;
   border-radius: 8px;
   box-shadow: 0px 8px 21px -6px #00000040;

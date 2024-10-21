@@ -5,11 +5,11 @@ import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import styles from './ActivityResponses.module.css';
 
 function ActivityResponses() {
-    const { id } = useParams();  // ID da atividade
+    const { id } = useParams();
     const [activity, setActivity] = useState(null);
     const [responses, setResponses] = useState([]);
     const [user, setUser ] = useState(null);
-    const [expandedIndex, setExpandedIndex] = useState(null); // Estado para controlar qual card está expandido
+    const [expandedIndex, setExpandedIndex] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -27,7 +27,6 @@ function ActivityResponses() {
     }, [navigate]);
 
     useEffect(() => {
-        // Função para carregar a atividade e suas respostas
         const fetchActivityData = async () => {
             try {
                 const activityResponse = await fetch(`http://localhost:4000/activities/${id}`);
@@ -43,11 +42,9 @@ function ActivityResponses() {
         };
 
         fetchActivityData();
+        const intervalId = setInterval(fetchActivityData, 5000);
 
-        // Iniciar polling para buscar novas respostas
-        const intervalId = setInterval(fetchActivityData, 5000); // 5 segundos
-
-        return () => clearInterval(intervalId); // Limpar o intervalo ao desmontar o componente
+        return () => clearInterval(intervalId);
     }, [id]);
 
     if (!activity) {
@@ -59,7 +56,7 @@ function ActivityResponses() {
     };
 
     const handleGoBack = () => {
-        navigate(-1); // Retrocede uma página
+        navigate(-1);
     };
 
     return (
@@ -94,7 +91,7 @@ function ActivityResponses() {
                             </h3>
                             <p className={styles.date}>Data: {new Date(response.date).toLocaleDateString()}</p>
                             <FontAwesomeIcon className={styles.chevron} icon={expandedIndex === index ? faChevronUp : faChevronDown} />
-                            {expandedIndex === index && ( // Verifica se o card está expandido
+                            {expandedIndex === index && ( 
                                 <div className={styles.answers}>
                                     {activity.questions.map((question, i) => (
                                         <div key={question.id} className={styles.questionBlock}>

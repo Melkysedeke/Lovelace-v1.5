@@ -1,4 +1,4 @@
-import styles from './Materials.module.css'; // Certifique-se de criar um arquivo CSS para estilos
+import styles from './Materials.module.css';
 import SimpleYouGlishWidget from './SimpleYouGlishWidget';
 
 const Materials = () => {

@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import FormActivity from './FormActivity'; // Reutilizando o componente de formulário
+import FormActivity from './FormActivity'; 
 
 function EditActivity() {
-    const { id } = useParams(); // Pegando o ID da URL
+    const { id } = useParams(); 
     const [activity, setActivity] = useState(null);
 
     useEffect(() => {
-        // Buscar a atividade pelo ID
         fetch(`http://localhost:4000/activities/${id}`)
             .then((resp) => resp.json())
             .then((data) => setActivity(data))

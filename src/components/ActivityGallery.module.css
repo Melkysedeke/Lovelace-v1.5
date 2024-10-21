@@ -6,7 +6,7 @@
 
 .galleryContainer {
     display: grid;
-    grid-template-columns: 1fr; /* Cada item ocupará 100% da largura */
+    grid-template-columns: 1fr; 
     gap: 20px;
     padding: 20px;
 }

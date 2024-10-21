@@ -7,19 +7,19 @@ function TextArea({ name, placeholder, value, handleOnChange, required }) {
 
     function autoResize() {
         const textarea = textareaRef.current;
-        textarea.style.height = 'auto'; // Redefine a altura para calcular a nova altura correta
-        const maxHeight = 1000 * 10; // Assume 20px de altura por linha, ajustável conforme o necessário
+        textarea.style.height = 'auto';
+        const maxHeight = 1000 * 10;
         if (textarea.scrollHeight > maxHeight) {
             textarea.style.height = maxHeight + 'px';
-            textarea.style.overflowY = 'auto'; // Mostra a barra de rolagem vertical se a altura máxima for atingida
+            textarea.style.overflowY = 'auto';
         } else {
             textarea.style.height = textarea.scrollHeight + 'px';
-            textarea.style.overflowY = 'hidden'; // Esconde a barra de rolagem vertical
+            textarea.style.overflowY = 'hidden';
         }
     }
 
     useEffect(() => {
-        autoResize(); // Ajusta a altura inicial baseada no valor inicial
+        autoResize();
     }, [value]);
 
     return (

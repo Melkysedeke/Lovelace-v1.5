@@ -4,21 +4,21 @@ import styles from './AccessActivity.module.css';
 import TextArea from '../components/TextArea';
 
 function AccessActivity() {
-    const { id } = useParams(); // ID da atividade
+    const { id } = useParams(); 
 const [activity, setActivity] = useState(null);
 const [responses, setResponses] = useState([]);
-const [name, setName] = useState(""); // Inicializar com string vazia
+const [name, setName] = useState(""); 
 const [user, setUser] = useState(null);
-const [error, setError] = useState(null); // Para capturar erros
+const [error, setError] = useState(null); 
 const navigate = useNavigate();
 
-// useEffect para carregar o usuário do sessionStorage
+
 useEffect(() => {
     try {
         const storedUser = JSON.parse(sessionStorage.getItem('user'));
         if (storedUser) {
             setUser(storedUser);
-            setName(storedUser.name || ""); // Atualiza o nome após carregar o usuário
+            setName(storedUser.name || "");
         } else {
             navigate("/");
         }
@@ -28,7 +28,6 @@ useEffect(() => {
     }
 }, [navigate]);
 
-// useEffect para buscar detalhes da atividade
 useEffect(() => {
     fetch(`http://localhost:4000/activities/${id}`)
         .then(response => response.json())
@@ -45,7 +44,6 @@ useEffect(() => {
         });
 }, [id]);
 
-// Função para lidar com mudanças nas respostas
 const handleResponseChange = (questionId, value) => {
     const updatedResponses = responses.map(response => {
         if (response.id === questionId) {
@@ -56,25 +54,21 @@ const handleResponseChange = (questionId, value) => {
     setResponses(updatedResponses);
 };
 
-// Função para enviar as respostas
 const submitResponses = (e) => {
     e.preventDefault();
 
-    // Validar se o nome foi preenchido
     if (!name.trim()) {
         setError("Por favor, insira seu nome antes de enviar as respostas.");
         return;
     }
 
-    // Criar objeto para submissão das respostas
     const submission = {
         activityId: id,
         answers: responses,
-        user: name || "Anônimo", // Usar o nome fornecido ou 'Anônimo' como padrão
-        date: new Date().toISOString(), // Timestamp da resposta
+        user: name || "Anônimo",
+        date: new Date().toISOString(),
     };
 
-    // Enviar respostas para o servidor
     fetch('http://localhost:4000/responses', {
         method: 'POST',
         headers: {
@@ -93,7 +87,7 @@ const submitResponses = (e) => {
         alert('Respostas submetidas com sucesso!');
         setTimeout(() => {
             navigate("/");
-        }, 2000);  // Tempo de espera de 2 segundos
+        }, 2000); 
     })
     .catch((err) => {
         console.error('Erro ao enviar respostas:', err);

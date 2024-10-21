@@ -23,13 +23,12 @@ function Activity() {
 
         navigator.clipboard.writeText(codigoTexto)
             .then(() => {
-                setTooltipVisible(true);  // Mostrar tooltip
-                setIconChanged(true); // Altera o ícone para "copiado"
+                setTooltipVisible(true);
+                setIconChanged(true);
 
-                // Esconder tooltip e retornar o ícone ao estado original após 2 segundos
                 setTimeout(() => {
                     setTooltipVisible(false);
-                    setIconChanged(false); // Retorna o ícone ao estado original
+                    setIconChanged(false);
                 }, 2000);
             })
             .catch((err) => console.error('Erro ao copiar código:', err));
