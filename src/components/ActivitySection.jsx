@@ -1,71 +1,120 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './ActivitySection.module.css'; // Crie um arquivo CSS para estilos
 
 const ActivitySection = () => {
-    const [accessCode, setAccessCode] = useState('');
-    const navigate = useNavigate();
+    const [accessCode, setAccessCode] = useState(''); // Armazena o código de acesso
+    const [inputVisible, setInputVisible] = useState(false); // Controla a visibilidade do input
+    const [error, setError] = useState(null); // Armazena mensagens de erro
+    const navigate = useNavigate(); // Hook para navegação
+    const [timer, setTimer] = useState(null); // Armazena o ID do timer
+
+    useEffect(() => {
+        // Limpa o timer ao desmontar ou ao mudar a visibilidade do input
+        return () => clearTimeout(timer);
+    }, [timer]);
 
     const handleAccessActivity = (e) => {
         e.preventDefault();
-        fetch(`http://localhost:4000/activities?accessCode=${accessCode}`)
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.length > 0) {
-                    const activity = data[0];
-                    navigate(`/aA/${activity.id}`);
-                } else {
-                    alert('Activity not found');
-                }
-            })
-            .catch((err) => console.log(err));
+
+        // Se o input não estiver visível, mostre o input
+        if (!inputVisible) {
+            setInputVisible(true);
+            setError(null); // Limpa o erro ao abrir o input
+            // Inicia um timer de 7 segundos
+            const newTimer = setTimeout(() => {
+                setInputVisible(false);
+                setAccessCode(''); // Limpa o código de acesso se o input for fechado
+            }, 7000);
+            setTimer(newTimer);
+        } else if (accessCode.trim()) {
+            // Se o input já está visível e preenchido, verifique a atividade
+            fetch(`http://localhost:4000/activities?accessCode=${accessCode}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.length > 0) {
+                        const activity = data[0];
+                        navigate(`/aA/${activity.id}`); // Navega para a atividade com base no id
+                    } else {
+                        setError('Atividade não encontrada'); // Mostra mensagem se não encontrar
+                    }
+                })
+                .catch((err) => {
+                    console.error(err);
+                    setError('Erro ao acessar a atividade.'); // Captura erros de requisição
+                });
+        } else {
+            // Se o input está visível mas o código está vazio
+            setError('Por favor, insira um código de acesso.');
+        }
     };
 
+    const handleInputChange = (e) => {
+        setAccessCode(e.target.value);
+        if (timer) {
+            clearTimeout(timer); // Limpa o timer se o usuário estiver digitando
+            setTimer(null); // Reseta o timer
+        }
+    };
+
+    useEffect(() => {
+        if (inputVisible && accessCode.trim() === '') {
+            // Reinicia o timer se o input estiver visível e o código de acesso estiver vazio
+            const newTimer = setTimeout(() => {
+                setInputVisible(false);
+                setAccessCode(''); // Limpa o código de acesso se o input for fechado
+            }, 7000);
+            setTimer(newTimer);
+
+            // Limpa o timer ao desmontar ou ao mudar a visibilidade do input
+            return () => clearTimeout(newTimer);
+        }
+    }, [inputVisible, accessCode]);
 
     return (
         <section className={styles.activitySection}>
-            <h1 style={{ color: '#f21b3f' }}>Atividades</h1>
-            <div className={styles.container}>
                 {/* Atividades Predeterminadas */}
-                <div className={styles.predefinedActivities}>
-                    <h2 style={{ color: '#f21b3f' }}>Atividades Predeterminadas</h2>
-                    <ul>
-                        <li><a href="/activity/1">Atividade 1</a></li>
-                        <p>Aprimore suas habilidades gramaticais com esta atividade envolvente, projetada para melhorar a estrutura e a clareza das frases.</p>
-                        <li><a href="/activity/2">Atividade 2</a></li>
-                        <p>Pratique a construção de vocabulário com foco em expressões e frases comuns do dia a dia.</p>
-                        <li><a href="/activity/3">Atividade 3</a></li>
-                        <p>Melhore sua compreensão auditiva com perguntas baseadas em áudio sobre diversos temas da vida real.</p>
-                    </ul>
-                </div>
+                <section className={styles.predefinedActivities}>
+                    <h2>Prática</h2>
+                    <p>Experimente atividades pré-estabelecidas, desenvolvidas para aprimorar suas habilidades e reforçar conceitos essenciais, oferecendo uma prática estruturada e enriquecedora para seu aprendizado.</p>
+                    <button><a href="/#">Go ahead</a></button>
+                </section>
 
                 {/* Criar Atividade Personalizada */}
-                <div className={styles.customActivity}>
-                    <h2 style={{ color: '#f21b3f' }}>Criar Atividade Personalizada</h2>
+                <section className={styles.customActivity}>
+                    <h2>Atividade Personalizada</h2>
                     <p>Crie suas próprias atividades personalizadas, adaptadas aos seus objetivos e interesses. Personalize os desafios para tornar o aprendizado mais eficaz e envolvente.</p>
-                    <button style={{ backgroundColor: '#f21b3f', color: '#fff' }}>
+                    <button>
                         <a href="/ce">Criar</a>
                     </button>
-                </div>
+                </section>
 
                 {/* Acessar Atividade por Código */}
-                <div className={styles.accessActivity}>
-                    <h2 style={{ color: '#f21b3f' }}>Acessar Atividade por Código</h2>
+                <section className={styles.accessActivity}>
+                    <h2>Acessar Atividade</h2>
                     <p>Tem um código de acesso? Insira-o aqui para desbloquear uma atividade exclusiva, criada especialmente para você. Explore novos desafios e conteúdos personalizados.</p>
+                    
                     <form onSubmit={handleAccessActivity}>
-                        <input 
-                            type="text" 
-                            placeholder="Código de Acesso" 
-                            value={accessCode}
-                            onChange={(e) => setAccessCode(e.target.value)}
-                            required
-                        />
-                        <button type="submit" style={{ backgroundColor: '#f21b3f', color: '#fff' }}>
-                            Acessar
+                        {inputVisible && (
+                            <input
+                                type="text"
+                                placeholder="Código de Acesso"
+                                value={accessCode}
+                                onChange={handleInputChange}
+                                required
+                            />
+                        )}
+                        <button type="submit">
+                            {inputVisible ? 'Acessar' : 'Código'}
                         </button>
                     </form>
-                </div>
-            </div>
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
+                </section>
+                {/* <section>
+                    <h2>Galeria</h2>
+                    <p>Já tem atividades criadas? Acesse a galeria para visualizá-las, acompanhar o progresso e gerenciar suas atividades personalizadas de forma prática.</p>
+                    <button><a href="/#">Go ahead</a></button>
+                </section> */}
         </section>
     );
 };

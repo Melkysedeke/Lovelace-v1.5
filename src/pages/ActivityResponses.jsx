@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import styles from './ActivityResponses.module.css';
 
 function ActivityResponses() {
@@ -23,19 +25,29 @@ function ActivityResponses() {
             navigate("/");
         }
     }, [navigate]);
-     
-    useEffect(() => {
-        // Carregar a atividade e suas respostas
-        fetch(`http://localhost:4000/activities/${id}`)
-            .then(response => response.json())
-            .then(data => setActivity(data))
-            .catch(err => console.log(err));
 
-        // Carregar as respostas submetidas
-        fetch(`http://localhost:4000/responses?activityId=${id}`)
-            .then(response => response.json())
-            .then(data => setResponses(data))
-            .catch(err => console.log(err));
+    useEffect(() => {
+        // Função para carregar a atividade e suas respostas
+        const fetchActivityData = async () => {
+            try {
+                const activityResponse = await fetch(`http://localhost:4000/activities/${id}`);
+                const activityData = await activityResponse.json();
+                setActivity(activityData);
+
+                const responsesResponse = await fetch(`http://localhost:4000/responses?activityId=${id}`);
+                const responsesData = await responsesResponse.json();
+                setResponses(responsesData);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        fetchActivityData();
+
+        // Iniciar polling para buscar novas respostas
+        const intervalId = setInterval(fetchActivityData, 5000); // 5 segundos
+
+        return () => clearInterval(intervalId); // Limpar o intervalo ao desmontar o componente
     }, [id]);
 
     if (!activity) {
@@ -46,10 +58,14 @@ function ActivityResponses() {
         setExpandedIndex(expandedIndex === index ? null : index);
     };
 
+    const handleGoBack = () => {
+        navigate(-1); // Retrocede uma página
+    };
+
     return (
         <div className={styles.container}>
             <header className={styles.header}>
-                <h1><a href="/ua">Lovelace</a></h1>
+                <h1 onClick={handleGoBack}>Lovelace</h1>
                 <div className={styles.userInfo}>
                     {user ? (
                         <>
@@ -72,11 +88,12 @@ function ActivityResponses() {
             <div className={styles.responsesSection}>
                 {responses.length > 0 ? (
                     responses.map((response, index) => (
-                        <div key={response.id} className={styles.responseCard} onClick={() => toggleExpand(index)} style={{ cursor: 'pointer' }} >
+                        <div key={response.id} className={styles.responseCard} onClick={() => toggleExpand(index)} style={{ cursor: 'pointer' }}>
                             <h3>
                                 Resposta {index + 1} por {response.user}:
                             </h3>
                             <p className={styles.date}>Data: {new Date(response.date).toLocaleDateString()}</p>
+                            <FontAwesomeIcon className={styles.chevron} icon={expandedIndex === index ? faChevronUp : faChevronDown} />
                             {expandedIndex === index && ( // Verifica se o card está expandido
                                 <div className={styles.answers}>
                                     {activity.questions.map((question, i) => (

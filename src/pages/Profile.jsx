@@ -15,15 +15,10 @@ const UserProfile = () => {
   const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
-    try {
-      const storedUser  = JSON.parse(sessionStorage.getItem('user'));
-      if (storedUser ) {
-        setUser (storedUser );
-      } else {
-        navigate("/");
-      }
-    } catch (error) {
-      console.error("Erro ao analisar o usuário do sessionStorage:", error);
+    const storedUser  = JSON.parse(sessionStorage.getItem('user'));
+    if (storedUser ) {
+      setUser (storedUser );
+    } else {
       navigate("/");
     }
   }, [navigate]);
@@ -46,13 +41,48 @@ const UserProfile = () => {
       setErrorMessage('As senhas não coincidem.');
       return;
     }
-    // Salva as alterações no sessionStorage
-    sessionStorage.setItem('user', JSON.stringify(user));
-    setSuccessMessage('Dados atualizados com sucesso!');
-    setErrorMessage('');
-    setTimeout(() => {
-      navigate("/ua");
-    }, 2000);
+
+    // Verificar se o email já está em uso
+    fetch('http://localhost:4000/users')
+      .then(resp => resp.json())
+      .then(data => {
+        const userExists = data.some(existingUser  => existingUser .email === user.email && existingUser .id !== user.id);
+
+        if (userExists) {
+          setErrorMessage("Este email já está sendo utilizado. Por favor, escolha outro.");
+        } else {
+          // Atualizar o usuário no servidor
+          fetch(`http://localhost:4000/users/${user.id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              ...user,
+              password: newPassword || user.password, // Use a nova senha se fornecida
+              profileImage: user.profileImage || "/defaultProfile.png" // Mantém a imagem padrão se não houver
+            }),
+          })
+          .then(resp => {
+            if (!resp.ok) {
+              throw new Error('Erro ao atualizar o perfil');
+            }
+            return resp.json();
+          })
+          .then(updatedUser  => {
+            // Atualiza o usuário no sessionStorage
+            sessionStorage.setItem('user', JSON.stringify(updatedUser ));
+            setUser (updatedUser );
+            setSuccessMessage('Dados atualizados com sucesso!');
+            setErrorMessage('');
+          })
+          .catch(err => {
+            console.error("Erro ao atualizar:", err);
+            setErrorMessage('Erro ao atualizar os dados.');
+          });
+        }
+      })
+      .catch(err => console.error("Erro ao verificar o email:", err));
   };
 
   const handleImageChange = (e) => {
@@ -83,10 +113,20 @@ const UserProfile = () => {
   };
 
   const deleteUserAccount = () => {
-    // Aqui você pode adicionar a lógica para excluir a conta do usuário
-    console.log('Conta excluída');
-    sessionStorage.removeItem('user');
-    navigate("/");
+    if (window.confirm("Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.")) {
+      fetch(`http://localhost:4000/users/${user.id}`, {
+        method: 'DELETE',
+      })
+      .then(resp => {
+        if (!resp.ok) {
+          throw new Error('Erro ao excluir a conta');
+        }
+        // Remover o usuário do sessionStorage e redirecionar
+        sessionStorage.removeItem('user');
+        navigate("/");
+      })
+      .catch(err => console.error("Erro ao excluir a conta:", err));
+    }
   };
 
   const handleLogout = () => {
@@ -129,7 +169,7 @@ const UserProfile = () => {
           >
             <img 
               src={user .profileImage}
-              alt="User profile"
+              alt="User  profile"
               className={styles.profileImg}
             />
             {showTooltip && <div className={styles.tooltip}>Clique para alterar a foto</div>}

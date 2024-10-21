@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import ActivityGallery from "../components/ActivityGallery"
-import styles from "./UserArea.module.css"
-import ActivitySection from "../components/Activitysection";
+import ActivityGallery from "../components/ActivityGallery";
+import styles from "./UserArea.module.css";
+import ActivitySection from "../components/ActivitySection";
+import Materials from "../components/Materials";
 
 export default function UserArea() {
   const navigate = useNavigate();
@@ -11,43 +12,45 @@ export default function UserArea() {
 
   useEffect(() => {
     try {
-        const storedUser  = JSON.parse(sessionStorage.getItem('user'));
-        if (storedUser ) {
-            setUser (storedUser);
-            console.log(storedUser)
-        } else {
-            navigate("/");
-        }
-    } catch (error) {
-        console.error("Erro ao analisar o usuário do sessionStorage:", error);
+      const storedUser = JSON.parse(sessionStorage.getItem("user"));
+      if (storedUser) {
+        setUser(storedUser);
+        console.log(storedUser);
+      } else {
         navigate("/");
-    }
-    }, [navigate]);
-
-    const toggleMenu = () => {
-      setMenuVisible(!menuVisible);
-    };
-  
-    const handleLogout = () => {
-      sessionStorage.removeItem('user');
+      }
+    } catch (error) {
+      console.error("Erro ao analisar o usuário do sessionStorage:", error);
       navigate("/");
-    };
+    }
+  }, [navigate]);
+
+  const toggleMenu = () => {
+    setMenuVisible(!menuVisible);
+  };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("user");
+    navigate("/");
+  };
 
   // Função para alternar visibilidade da senha
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h1><a href="/ua">Lovelace</a></h1>
+        <h1>
+          <a href="/ua">Lovelace</a>
+        </h1>
         <div className={styles.userInfo}>
           {user ? (
             <>
               <p onClick={toggleMenu}>{user.name}</p>
               <div>
-                <img 
-                  onClick={toggleMenu} 
-                  src={user.profileImage || '/defaultProfile.png'} 
-                  alt="Avatar do usuário" 
-                  className={styles.userImage} 
+                <img
+                  onClick={toggleMenu}
+                  src={user.profileImage || "/defaultProfile.png"}
+                  alt="Avatar do usuário"
+                  className={styles.userImage}
                 />
                 {menuVisible && (
                   <div className={styles.dropdownMenu}>
@@ -64,8 +67,9 @@ export default function UserArea() {
           )}
         </div>
       </header>
-      <ActivitySection/>
-      <ActivityGallery/>
+      <ActivityGallery />
+      <ActivitySection />
+      <Materials />
     </div>
   );
 }

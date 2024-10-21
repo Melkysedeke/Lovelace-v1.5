@@ -3,47 +3,41 @@
     background-color: #fff; /* Cor de fundo clara */
     border: 1px solid #8e8e8e;
     margin-bottom: 30px;
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 150px;
     gap: 20px;
 }
 
-h1 {
-    text-align: center;
-}
-
-h2 {
-    margin-bottom: 10px;
-}
-
-.predefinedActivities ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.predefinedActivities li {
-    margin: 5px 0;
-}
-
-.predefinedActivities a {
-    text-decoration: none;
-    color: #f21b3f;
-}
-
-.customActivity, .accessActivity {
+.activitySection section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     padding: 15px;
     border: 1px solid lightgray;
     border-radius: 8px;
-    background-color: #fff; /* Fundo branco para destacar */
+}
+
+.activitySection h2 {
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.activitySection p {
+    font-size: 11px;
+    margin-bottom: 20px;
+}
+
+
+.accessActivity form {
+    display: flex;
+    gap: 10px;
 }
 
 .activitySection input {
     width: 100%;
     padding: 10px;
-    margin-bottom: 10px;
     border: 1px solid #ccc;
  }
 
@@ -54,10 +48,16 @@ h2 {
     cursor: pointer;
 }
 
+.activitySection button {
+    background-color: #f21b3f;
+    color: #fff;
+    width: fit-content;
+}
+
 .activitySection button a {
     color: #fff;
 }
 
 .activitySection button:hover {
-    opacity: 0.8;
+   background-color: #8C1024;
 }

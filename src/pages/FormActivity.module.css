@@ -11,24 +11,29 @@
 /* Header */
 
 .header {
-  position: sticky;
-  top: 0;
-  height: 72px;
   width: 100%;
-  padding: 0 20px;
+  height: 72px;
+  border: 1px solid #8e8e8e;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #8E8E8E;
-  border-radius: 12px;
-  background-color: #fff;
-  z-index: 100;
+  padding: 0 20px;
   margin: 24px 0 30px 0;
+  border-radius: 8px;
+}
+
+.header h1 {
+  font: bold normal 36px "Inspiration";
+  transform: rotate(-13deg);
+  background:  linear-gradient(269.52deg, #F21B3F -1.77%, #FFD151 95%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .header h1, .header p, .header button {
   flex: 0 0 auto;
-  width: 103px;
+  width: auto;
   text-align: center;
 }
 
@@ -56,6 +61,48 @@
 
 .header button:hover {
   background-color: #8C1024;
+}
+
+/* Config */
+
+.config {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.config button {
+  /* width: 103px;
+  height: 48px; */
+  /* background-color: #F21B3F;
+  color: #fff; */
+  padding: 8px;
+}
+
+.config a {
+  text-decoration: none;
+  background-color: transparent;
+  color: #F21B3F;
+}
+
+.linkButton {
+  background-color: transparent;
+  color: #F21B3F;
+  border-bottom: 1px solid transparent;
+}
+
+.linkButton:hover {
+  border-bottom: 1px solid #F21B3F;
+}
+
+.deleteButton {
+  background-color: transparent;
+  border-bottom: 1px solid transparent;
+}
+
+.deleteButton:hover {
+  border-bottom: 1px solid lightgray;
 }
 
 /* Cabeçalho do formulário */
@@ -116,3 +163,4 @@
   color: lightgray;
   transition: .2s;
 }
+

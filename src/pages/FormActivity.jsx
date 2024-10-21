@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TextArea from '../components/TextArea';
 import QuestionBox from '../components/QuestionBox';
 import styles from './FormActivity.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus} from '@fortawesome/free-solid-svg-icons';
 
 // Gerar um código de acesso aleatório
 function generateAccessCode(length = 8) {
@@ -15,7 +16,6 @@ function generateAccessCode(length = 8) {
     }
     return result;
 }
-
 
 function FormActivity({ activity = null }) {
     const [user, setUser] = useState(() => {
@@ -79,7 +79,7 @@ function FormActivity({ activity = null }) {
         // Preparar a atividade
         const updatedActivity = {
             ...activities,
-            userId: user ? user.id : null // Só atribui o userId se o usuário estiver logado
+            userId: user ? user.id : null
         };
 
         // Verificar se é criação ou edição
@@ -105,6 +105,24 @@ function FormActivity({ activity = null }) {
         });
     };
 
+    const deleteActivity = (activityId) => {
+        if (window.confirm("Tem certeza que deseja excluir esta atividade?")) {
+            fetch(`http://localhost:4000/activities/${activityId}`, {
+                method: 'DELETE',
+            })
+            .then((resp) => {
+                if (!resp.ok) {
+                    throw new Error("Erro ao excluir a atividade.");
+                }
+                // Remover a atividade excluída da lista
+                setActivities(activities.filter(activity => activity.id !== activityId));
+                alert("Atividade excluída com sucesso!");
+            })
+            .catch((err) => console.error('Erro ao excluir atividade:', err));
+        }
+        activityId.preventDefault();
+    };
+
     return (
         <div className={styles.container}>
             <form className={styles.form} onSubmit={submit}>
@@ -113,6 +131,17 @@ function FormActivity({ activity = null }) {
                     <p>{activity ? "Editar Atividade" : "Criar Atividade"}</p>
                     <button type='submit'>{activity ? "Salvar" : "Criar"}</button>
                 </header>
+                {activity && (
+                    <div className={styles.config}>
+                        <button className={styles.linkButton}><a href={`/rA/${activity.id}`}>Respostas</a></button>
+                        <button
+                            className={styles.deleteButton}
+                            onClick={() => deleteActivity(activity.id)}
+                        >
+                            Excluir
+                        </button>
+                    </div>
+                )}
                 <div className={styles.headerForm}>
                     <TextArea
                         name="name"

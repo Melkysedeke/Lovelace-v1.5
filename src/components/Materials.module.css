@@ -1,0 +1,31 @@
+/* Materials.module.css */
+.materialsSection {
+    display: flex;
+    justify-content: space-around; /* Distribui os blocos igualmente */
+    padding: 20px;
+    background-color: #f9f9f9; /* Cor de fundo da seção */
+    border: 1px solid lightgray; /* Borda da seção */
+    border-radius: 8px; /* Bordas arredondadas */
+}
+
+.materialBlock {
+    flex: 1; /* Faz com que os blocos ocupem espaço igual */
+    margin: 10px; /* Margem entre os blocos */
+    padding: 20px;
+    background-color: #fff; /* Cor de fundo dos blocos */ /* Borda dos blocos */
+    border-radius: 5px; /* Bordas arredondadas dos blocos */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve para os blocos */
+}
+
+.materialBlock img {
+    margin-top: 25px;
+    width: 100%;
+}
+
+.materialBlock h3 {
+    margin-top: 0; /* Remove margem superior do título */
+}
+
+.materialBlock p {
+    font-size: 12px;
+}
