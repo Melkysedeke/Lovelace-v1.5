@@ -254,22 +254,22 @@ export default function Home() {
         </div>
         <div className={styles.cards}>
           <div>
-            <img src="" alt="" />
+            <img src="/src/img/pexels-moh-adbelghaffar-771742.jpg" alt="" />
             <p>Marcos Emanuel</p>
             <p>Ux/UI Designer</p>
           </div>
           <div>
-            <img src="" alt="" />
+            <img src="/src/img/pexels-andrewperformance1-697509.jpg" alt="" />
             <p>Melkysedeke Costa</p>
             <p>Desenvolvedor Fullstack</p>
           </div>
           <div>
-            <img src="" alt="" />
+            <img src="/src/img/pexels-olly-3785079.jpg" alt="" />
             <p>Daniel de Santana Alves</p>
             <p>Desenvolvedor Fullstack</p>
           </div>
           <div>
-            <img src="" alt="" />
+            <img src="/src/img/pexels-olly-774909.jpg" alt="" />
             <p>Lenade Barreto Santos Gil</p>
             <p>Orientadora</p>
           </div>

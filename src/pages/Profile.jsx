@@ -1,23 +1,23 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from './Profile.module.css';
+import styles from "./Profile.module.css";
 
 const UserProfile = () => {
   const navigate = useNavigate();
-  const [user, setUser ] = useState(null);
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [user, setUser] = useState(null);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [newImage, setNewImage] = useState('');
-  const [imageType, setImageType] = useState('url');
+  const [newImage, setNewImage] = useState("");
+  const [imageType, setImageType] = useState("url");
   const [showTooltip, setShowTooltip] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
-    const storedUser  = JSON.parse(sessionStorage.getItem('user'));
-    if (storedUser ) {
-      setUser (storedUser );
+    const storedUser = JSON.parse(sessionStorage.getItem("user"));
+    if (storedUser) {
+      setUser(storedUser);
     } else {
       navigate("/");
     }
@@ -25,7 +25,7 @@ const UserProfile = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUser ({ ...user, [name]: value });
+    setUser({ ...user, [name]: value });
   };
 
   const handlePasswordChange = (e) => {
@@ -38,57 +38,62 @@ const UserProfile = () => {
 
   const saveChanges = () => {
     if (newPassword && newPassword !== confirmPassword) {
-      setErrorMessage('As senhas não coincidem.');
+      setErrorMessage("As senhas não coincidem.");
       return;
     }
 
-    fetch('http://localhost:4000/users')
-      .then(resp => resp.json())
-      .then(data => {
-        const userExists = data.some(existingUser  => existingUser .email === user.email && existingUser .id !== user.id);
+    fetch("http://localhost:4000/users")
+      .then((resp) => resp.json())
+      .then((data) => {
+        const userExists = data.some(
+          (existingUser) =>
+            existingUser.email === user.email && existingUser.id !== user.id
+        );
 
         if (userExists) {
-          setErrorMessage("Este email já está sendo utilizado. Por favor, escolha outro.");
+          setErrorMessage(
+            "Este email já está sendo utilizado. Por favor, escolha outro."
+          );
         } else {
           fetch(`http://localhost:4000/users/${user.id}`, {
-            method: 'PUT',
+            method: "PUT",
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             },
             body: JSON.stringify({
               ...user,
               password: newPassword || user.password,
-              profileImage: user.profileImage || "/defaultProfile.png"
+              profileImage: user.profileImage || "/defaultProfile.png",
             }),
           })
-          .then(resp => {
-            if (!resp.ok) {
-              throw new Error('Erro ao atualizar o perfil');
-            }
-            return resp.json();
-          })
-          .then(updatedUser  => {
-            sessionStorage.setItem('user', JSON.stringify(updatedUser ));
-            setUser (updatedUser );
-            setSuccessMessage('Dados atualizados com sucesso!');
-            setErrorMessage('');
-          })
-          .catch(err => {
-            console.error("Erro ao atualizar:", err);
-            setErrorMessage('Erro ao atualizar os dados.');
-          });
+            .then((resp) => {
+              if (!resp.ok) {
+                throw new Error("Erro ao atualizar o perfil");
+              }
+              return resp.json();
+            })
+            .then((updatedUser) => {
+              sessionStorage.setItem("user", JSON.stringify(updatedUser));
+              setUser(updatedUser);
+              setSuccessMessage("Dados atualizados com sucesso!");
+              setErrorMessage("");
+            })
+            .catch((err) => {
+              console.error("Erro ao atualizar:", err);
+              setErrorMessage("Erro ao atualizar os dados.");
+            });
         }
       })
-      .catch(err => console.error("Erro ao verificar o email:", err));
+      .catch((err) => console.error("Erro ao verificar o email:", err));
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (file && file.type.startsWith('image/')) {
+    if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onload = (event) => {
         setNewImage(event.target.result);
-        setImageType('file');
+        setImageType("file");
       };
       reader.readAsDataURL(file);
     }
@@ -96,7 +101,7 @@ const UserProfile = () => {
 
   const handleUrlChange = (e) => {
     setNewImage(e.target.value);
-    setImageType('url');
+    setImageType("url");
   };
 
   const toggleModal = () => {
@@ -104,29 +109,60 @@ const UserProfile = () => {
   };
 
   const saveImage = () => {
-    setUser ({ ...user, profileImage: newImage });
-    sessionStorage.setItem('user', JSON.stringify({ ...user, profileImage: newImage }));
+    setUser({ ...user, profileImage: newImage });
+    sessionStorage.setItem(
+      "user",
+      JSON.stringify({ ...user, profileImage: newImage })
+    );
     toggleModal();
   };
 
   const deleteUserAccount = () => {
-    if (window.confirm("Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.")) {
-      fetch(`http://localhost:4000/users/${user.id}`, {
-        method: 'DELETE',
-      })
-      .then(resp => {
-        if (!resp.ok) {
-          throw new Error('Erro ao excluir a conta');
-        }
-        sessionStorage.removeItem('user');
-        navigate("/");
-      })
-      .catch(err => console.error("Erro ao excluir a conta:", err));
+    if (
+      window.confirm(
+        "Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita."
+      )
+    ) {
+      fetch(`http://localhost:4000/activities?userId=${user.id}`)
+        .then((response) => response.json())
+        .then((activities) => {
+          const deleteActivityPromises = activities.map((activity) =>
+            fetch(`http://localhost:4000/activities/${activity.id}`, {
+              method: "DELETE",
+            })
+          );
+          return Promise.all(deleteActivityPromises)
+            .then(() =>
+              fetch(`http://localhost:4000/responses?userId=${user.id}`)
+            )
+            .then((response) => response.json())
+            .then((responses) => {
+              const deleteResponsePromises = responses.map((response) =>
+                fetch(`http://localhost:4000/responses/${response.id}`, {
+                  method: "DELETE",
+                })
+              );
+              return Promise.all(deleteResponsePromises);
+            });
+        })
+        .then(() => {
+          return fetch(`http://localhost:4000/users/${user.id}`, {
+            method: "DELETE",
+          });
+        })
+        .then((resp) => {
+          if (!resp.ok) {
+            throw new Error("Erro ao excluir a conta");
+          }
+          sessionStorage.removeItem("user");
+          navigate("/");
+        })
+        .catch((err) => console.error("Erro ao excluir a conta:", err));
     }
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem('user');
+    sessionStorage.removeItem("user");
     navigate("/");
   };
 
@@ -137,16 +173,18 @@ const UserProfile = () => {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h1><a href="/ua">Lovelace</a></h1>
+        <h1>
+          <a href="/ua">Lovelace</a>
+        </h1>
         <div className={styles.userInfo}>
           {user ? (
             <>
               <p>{user.name}</p>
               <div>
-                <img 
-                  src={user.profileImage || '/defaultProfile.png'} 
-                  alt="Avatar do usuário" 
-                  className={styles.userImage} 
+                <img
+                  src={user.profileImage || "/defaultProfile.png"}
+                  alt="Avatar do usuário"
+                  className={styles.userImage}
                 />
               </div>
             </>
@@ -157,18 +195,20 @@ const UserProfile = () => {
       </header>
       <div className={styles.userProfile}>
         <div className={styles.profileHeader}>
-          <div 
+          <div
             className={styles.profileImgContainer}
             onMouseEnter={() => setShowTooltip(true)}
             onMouseLeave={() => setShowTooltip(false)}
             onClick={toggleModal}
           >
-            <img 
-              src={user .profileImage}
+            <img
+              src={user.profileImage}
               alt="User  profile"
               className={styles.profileImg}
             />
-            {showTooltip && <div className={styles.tooltip}>Clique para alterar a foto</div>}
+            {showTooltip && (
+              <div className={styles.tooltip}>Clique para alterar a foto</div>
+            )}
           </div>
           <h2>{user.name}</h2>
         </div>
@@ -194,7 +234,7 @@ const UserProfile = () => {
             name="bio"
             value={user.bio}
             onChange={handleInputChange}
-            placeholder='Biografia'
+            placeholder="Biografia"
           />
           <label htmlFor="password">Alterar senha</label>
           <input
@@ -202,7 +242,7 @@ const UserProfile = () => {
             name="password"
             value={newPassword}
             onChange={handlePasswordChange}
-            placeholder='Sua nova senha'
+            placeholder="Sua nova senha"
           />
 
           <label htmlFor="confirmPassword">Confirmação a senha</label>
@@ -211,11 +251,17 @@ const UserProfile = () => {
             name="confirmPassword"
             value={newPassword}
             onChange={handleConfirmPasswordChange}
-            placeholder='Confirme sua nova senha'
-          />  
+            placeholder="Confirme sua nova senha"
+          />
 
-          {errorMessage && <p style={{ color: 'red', textAlign: 'center' }}>{errorMessage}</p>}
-          {successMessage && <p style={{ color: 'green', textAlign: 'center' }}>{successMessage}</p>}
+          {errorMessage && (
+            <p style={{ color: "red", textAlign: "center" }}>{errorMessage}</p>
+          )}
+          {successMessage && (
+            <p style={{ color: "green", textAlign: "center" }}>
+              {successMessage}
+            </p>
+          )}
 
           <button onClick={saveChanges}>Salvar Alterações</button>
           <button onClick={handleLogout}>Desconectar</button>
@@ -231,7 +277,7 @@ const UserProfile = () => {
                 Alterar por URL:
                 <input
                   type="text"
-                  value={imageType === 'url' ? newImage : ''}
+                  value={imageType === "url" ? newImage : ""}
                   onChange={handleUrlChange}
                 />
               </label>
@@ -246,8 +292,15 @@ const UserProfile = () => {
               </label>
 
               <div>
-                <button className={styles.closeModalButton} onClick={saveImage}>Salvar Alterações</button>
-                <button className={styles.closeModalButton} onClick={toggleModal}>Fechar</button>
+                <button className={styles.closeModalButton} onClick={saveImage}>
+                  Salvar Alterações
+                </button>
+                <button
+                  className={styles.closeModalButton}
+                  onClick={toggleModal}
+                >
+                  Fechar
+                </button>
               </div>
             </div>
           </div>

@@ -8,10 +8,12 @@ import Profile from "./pages/Profile.jsx";
 import EditActivity from "./pages/EditActivity.jsx";
 import AccessActivity from "./pages/AccessActivity.jsx";
 import ActivityResponses from "./pages/ActivityResponses.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 
 export default function App() {
   return (
     <BrowserRouter>
+     <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/ce" element={<FormActivity />} />

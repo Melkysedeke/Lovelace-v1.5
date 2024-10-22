@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import styles from './Dictionary.module.css';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Dictionary = () => {
   const [word, setWord] = useState('');
@@ -36,13 +38,15 @@ const Dictionary = () => {
   return (
     <div className={styles.container}>
       <h1>Dicionário</h1>
-      <input
-        type="text"
-        value={word}
-        onChange={(e) => setWord(e.target.value)} 
-        placeholder="Digite uma palavra"
-      />
-      <button onClick={fetchDefinition}>Buscar Definição</button>
+      <div className={styles.search}>
+        <input
+          type="text"
+          value={word}
+          onChange={(e) => setWord(e.target.value)}
+          placeholder="Digite uma palavra"
+        />
+        <button onClick={fetchDefinition}><FontAwesomeIcon icon={faMagnifyingGlass} /></button>
+      </div>
       {error && <p className={styles.error}>{error}</p>}
       {isModalOpen && (
         <div className={styles.overlay}>

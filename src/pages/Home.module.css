@@ -108,6 +108,7 @@ nav button:hover {
     height: 49px;
     border-radius: 42px;
     border: none;
+    background-color: #fff;
 }
 
 .mainContent button:hover {
@@ -152,9 +153,8 @@ nav button:hover {
 
 .secVideo video {
     border: 1px solid black;
-    width: 480px;
-    height: 480px;
     border-radius: 12px;
+    aspect-ratio: 1/1;
 }
 
 .secVideo div > p, .secVideo div > video {
@@ -235,13 +235,16 @@ nav button:hover {
 }
 
 .collaborators .cards {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     width: 100%;
-    justify-content: space-between;
     margin: 24px 0 60px;
+    gap: 10px;
 } 
 
 .cards div {
+    display: flex;
+    flex-direction: column;
     text-align: center;
 }
 
@@ -252,9 +255,11 @@ nav button:hover {
 
 .cards img {
     border: 1px solid black;
-    width: 206px;
-    height: 206px;
+    width: 100%;
+    aspect-ratio: 1/1;
+    /* height: 206px; */
     border-radius: 12px;
+    object-fit: cover;
 }
 
 /* Login/Cadastro */

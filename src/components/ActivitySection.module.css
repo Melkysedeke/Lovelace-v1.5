@@ -1,7 +1,7 @@
 .activitySection {
     padding: 20px;
     background-color: #fff;
-    border: 1px solid #8e8e8e;
+    border: 1px solid lightgray;
     margin-bottom: 30px;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -39,12 +39,13 @@
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
+    border-radius: 4px;
  }
 
 .activitySection button {
     padding: 10px 20px;
     border: none;
-    border-radius: 8px;
+    border-radius: 4px;
     cursor: pointer;
 }
 
